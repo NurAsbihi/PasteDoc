@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>PasteDoc</title>
+
+        <link rel="stylesheet" href="css/main.css" type="text/css">
+        <script type="text/javascript" src="js/clientside.js"></script>
+    </head>
+
+    <body>
+
+        <!-- Navigation Menu With Links -->
+
+        <div class="navigation">
+            <div class="bar">
+                <div class="logo">
+                    <h1>PasteDoc</h1>
+                </div>
+                <div class="nav-links">
+                    <ul>
+                        <li><a onclick="createDoc()">Create Doc</a></li>
+                        <li><a onclick="yourDocs()">Your Docs</a></li>
+                        <li><a onclick="viewDocs()">View All Docs</a></li>
+                    </ul>
+                </div>
+                <div class="user-status">
+                    <p>Hello, Guest</p>
+                    <button>Logout?</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Container For Maintaining Global Width -->
+
+        <div class="container">
+
+            <!-- Content Displayed On The Page -->
+
+            <div id="createDoc" class="cd-wrapper outer-wrapper">
+                <h1>Create Doc:</h1>
+                <div class="inner-wrapper">
+                    <div class="create-doc">
+                        <div class="doc-title">
+                            <div class="form-left">
+                                <label for="doc-title">Doc Title*:</label>
+                            </div>
+                            <div class="form-right">
+                                <input type="text" placeholder="The Tragedy of Macbeth" required>
+                            </div>
+                        </div>
+
+                        <div class="section-fields">
+                            <div class="field-left">
+                                <div class="form-left">
+                                    <label for="author">Author*:</label>
+                                </div>
+                                <div class="form-right">
+                                    <input type="text" placeholder="Shakespeare" required>
+                                </div>
+                            </div>
+                            
+                            <div class="field-right">
+                                <div class="form-left">
+                                    <label for="doc-password">Password <sup>(Optional)</sup>:</label>
+                                </div>
+                                <div class="form-right">
+                                    <input type="password" placeholder="Password123" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="doc-content">
+                            <label for="doc-content">Type/Paste Your Doc Below*:</label>
+                            <!-- <input type="text" placeholder="Fair is foul, and foul is fair." required> -->
+
+                            <textarea name="doc-paste" placeholder="Fair is foul, and fould is fair..."></textarea>
+
+                            <p>Please Note: Your IP Address is recorded as soon as you post this Doc</p>
+                        </div>
+                        
+
+                        <button>Post Doc</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="yourDocs" class="outer-wrapper">
+                <h1>Your Docs:</h1>
+                <div class="inner-wrapper">
+                    <table class="your-docs">
+                        <thead>
+                            <tr>
+                                <td>Title</td>
+                                <td>Password</td>
+                                <td>Date Created</td>
+                                <td class="alt">Actions</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Macbeth</td>
+                                <td>None</td>
+                                <td>Tuesday</td>
+                                <td class="buttons">
+                                    <button class="alt">View</button>
+                                    <button class="alt">Share</button>
+                                    <button class="alt">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="allDocs" class="outer-wrapper">
+                <h1>All Docs:</h1>
+                <div class="inner-wrapper">
+                    <table class="all-docs">
+                        <thead>
+                            <tr>
+                                <td>Title</td>
+                                <td>Author</td>
+                                <td>Date Created</td>
+                                <td class="alt">Actions</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Assumenda dignissimos deserunt temporibus beatae non doloribus possimus saepe ipsam voluptatem sint, quasi voluptatibus, voluptas atque voluptatum dolorem iste. Nobis, obcaecati aut!</td>
+                                <td>Shakespeare</td>
+                                <td>Tuesday</td>
+                                <td class="buttons">
+                                    <button class="alt">View</button>
+                                    <button class="alt">Share</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Macbeth</td>
+                                <td>None</td>
+                                <td>Tuesday</td>
+                                <td class="buttons">
+                                    <button class="alt">View</button>
+                                    <button class="alt">Share</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="ap-wrapper outer-wrapper">
+                <h1>Admin Panel:</h1>
+
+                <label>Search</label>
+                <input type="text" placeholder="Search">
+                <div class="inner-wrapper">
+                    <table class="admin-panel">
+                        <thead>
+                            <tr>
+                                <td>Title</td>
+                                <td>Author</td>
+                                <td>Date Created</td>
+                                <td>IP</td>
+                                <td class="alt">Actions</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Macbeth</td>
+                                <td>Shakespeare</td>
+                                <td>Tuesday</td>
+                                <td>192.168.0.1</td>
+                                <td class="buttons">
+                                    <button class="alt">View</button>
+                                    <button class="alt">Delete</button>
+                                    <button class="alt">IP Ban</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="dt-wrapper outer-wrapper">
+                <h1>Doc Title</h1>
+                <div class="doc-information">
+                    <div class="doc-author">
+                        <p>By: John_Doe (should show user)</p>
+                    </div>
+                    <div class="doc-date">
+                        <p>Date Created: 03/03/2020</p>
+                    </div>
+                    <div class="share-button">
+                        <button class="alt">Share</button>
+                    </div>
+                </div>
+                <div class="inner-wrapper">
+                    <input type="text" placeholder="This should have text from a doc">
+                </div>
+            </div>
+
+            <div class="ls-wrapper outer-wrapper">
+                <div class="inner-wrapper">
+                    <div class="login-box">
+                        <h1>Login</h1>
+                        <div class="email-wrapper">
+                            <div class="form-left">
+                                <label for="email">Email:</label>
+                            </div>
+                            <div class="form-right">
+                                <input type="text" placeholder="john@gmail.com" required>
+                            </div>
+                        </div>
+                        
+                        <div class="password-wrapper">
+                            <div class="form-left">
+                                <label for="password">Password:</label>
+                            </div>
+                            <div class="form-right">
+                                <input type="password" placeholder="Password" required>
+                            </div>
+                        </div>
+
+                        <button onclick="loginUser()">Login</button>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="signup-box">
+                        <h1>Sign-up</h1>
+                        <div class="name-wrapper">
+                            <div class="form-left">
+                                <label for="name">Name:</label>
+                            </div>
+                            <div class="form-right">
+                                <input type="text" placeholder="John" required>
+                            </div>
+                        </div>
+                        
+                        <div class="email-wrapper">
+                            <div class="form-left">
+                                <label for="email">Email:</label>
+                            </div>
+                            <div class="form-right">
+                                <input type="text" placeholder="john@gmail.com" required>
+                            </div>
+                        </div>
+                        
+                        <div class="password-wrapper">
+                            <div class="form-left">
+                                <label for="password">Password:</label>
+                            </div>
+                            <div class="form-right">
+                                <input type="password" placeholder="Password" required>
+                            </div>
+                        </div>
+
+                        <button onclick="registerUser()">Sign-up</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>
