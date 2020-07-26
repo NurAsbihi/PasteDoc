@@ -1,3 +1,3 @@
 # PasteDoc
 
-K, so baaically, a Pastebin ripoff.
+K, so basically, a Pastebin ripoff.
