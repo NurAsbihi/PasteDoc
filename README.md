@@ -1,3 +1,7 @@
 # PasteDoc
 
-K, so basically, a Pastebin ripoff.
+A Document posting web application
+
+## Inspired by Pastebin
+
+https://pastebin.com
