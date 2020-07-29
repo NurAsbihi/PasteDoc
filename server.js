@@ -1,13 +1,15 @@
 //Library imports
-
 const express = require('express');
-const fileUpload = require('express-fileupload')
+const bodyParser = require('body-parser');
+const fileUpload = require('express-fileupload');
+const bcryp = require('bcrypt')
 const mysql = require('mysql');
 
 
 const app = express();
 
 app.use(express.static('public'));
+app.use(bodyParser.json());
 
 const con = mysql.createPool    ({
     connectionLimit: 1,
@@ -15,10 +17,14 @@ const con = mysql.createPool    ({
     user: "dev",
     password: "password",
     database:"pastedoc",
-    debug: true
+    debug: false
 });
 
-/*function test() {
+function test() {
+    
+    /*let sql = "INSERT INTO users VALUES" +
+        "('2', 'Test', 'Test@mail.com', 'password', 'user');";*/
+    
     let sql = "SELECT * FROM pastedoc.users";
 
     con.query(sql, (err, result) => {
@@ -31,10 +37,33 @@ const con = mysql.createPool    ({
     });
 };
 
-test();*/
+//test();
 
-function registerUser() {
+function registerUser(req, resp) {
+
+    let rgstrUser = req.body;
+
+    console.log(rgstrUser.name);
+
+    console.log("Data = " + JSON.stringify(rgstrUser));
+
+    console.log(rgstrUser.name);
+
     
+
+    //let sql = "INSERT INTO users VALUES" +
+        //"(' "
 };
+function loginUser(req, resp)   {
+
+}
+function postDoc(req, resp) {
+
+}
+function deleteDoc(req, resp)   {
+
+}
+
+app.post('/userSignUp', registerUser);
 
 app.listen(8080);

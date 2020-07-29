@@ -75,7 +75,8 @@ input   {
     list-style: none;
 }
 .nav-links ul li  {
-    display: inline-block;
+    display: block;
+    float: left;
 }
 .nav-links li a   {
     text-decoration: none;
@@ -84,16 +85,31 @@ input   {
     font-size: 16px;
     padding: 5px;
     border: 1px solid black;
+    border-top: none;
     text-transform: none;
+    padding: 25px;
+}
+.nav-links li:nth-child(2) a    {
+    border-left: none;
+    border-right: none;
+}
+.nav-links li a:hover, a.active  {
+    background: rgb(219, 219, 219);
 }
 
 .user-status    {
     width: 35%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
-
-/*--    Nav Links Div Style     --*/
-
-
+.user-status p  {
+    margin: 1px;
+    padding-right: 5px;
+}
+.user-status button {
+    margin: 1px;
+}
 
 /*--    Container Keeps All Content On The Site Within 1200px   --*/
 
@@ -121,6 +137,7 @@ input   {
     border-radius: 8px;
     padding: 12px;
     min-height: 20px;
+    margin-top: 7px;
 }
 .inner-wrapper button   {
     display: flex;
@@ -237,15 +254,12 @@ input   {
 table.your-docs {
     width: 100%;
 }
-table.your-docs, td, th {
-    border: 1px solid black;
-}   
 table.your-docs td:nth-child(-n+3)  {
-    width: 20%;
+    width: 25%;
     max-width: 0;
 }
 table.your-docs td:nth-child(4)  {
-    width: 40%;
+    width: 25%;
 }
 table.your-docs thead   {
     font-size: 22px;
@@ -288,11 +302,11 @@ table.all-docs {
     width: 100%;
 }
 table.all-docs td:nth-child(-n+3)  {
-    width: 20%;
+    width: 25%;
     max-width: 0;
 }
 table.all-docs td:nth-child(4)  {
-    width: 40%;
+    width: 25%;
 }
 table.all-docs thead   {
     font-size: 22px;
@@ -335,11 +349,11 @@ table.admin-panel {
     width: 100%;
 }
 table.admin-panel td:nth-child(-n+4)  {
-    width: 15%;
+    width: 19%;
     max-width: 0;
 }
 table.admin-pane td:nth-child(5)  {
-    width: 40%;
+    width: 24%;
 }
 table.admin-panel thead   {
     font-size: 22px;
@@ -371,6 +385,62 @@ table.admin-panel td.buttons  {
 table.admin-panel td.buttons button.alt   {
     margin: 0;
 }
+
+/*----------------------------------------------
+
+        Line Flow CSS Rules 
+        (Align Headers w/ Elements
+        e.g. All Docs in line with Search Bar)
+
+----------------------------------------------*/
+
+.line-flow  {
+    display: flex;
+}
+.line-flow h1   {
+    margin: 0;
+    flex: 1;
+}
+.line-flow .doc-information  {
+    display: inline-flex;
+    align-items: center;
+    flex: 0.8;
+}
+.line-flow .search-field    {
+    display: inline-flex;
+    align-items: center;
+    flex: 0 1;
+}
+.line-flow .search-field input  {
+    border-radius: 25px;
+    padding-left: 10px;
+    border: 1.5px solid #000000;
+    margin-right: 5px;
+    width: auto;
+}
+/*------------------------------------------
+
+        Display/View Doc Section CSS Rules
+
+------------------------------------------*/
+
+.display-doc textarea   {
+    margin-top: 5px;
+    width: 100%;
+    min-height: 120px;
+    border-radius: 5px;
+    border: 2px solid #000000;
+    font-size: 14px;
+    padding: 5px;
+    resize: vertical;
+
+    /* Without this it'll flow out of the div */
+
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
 
 /*-----------------------------------------
 

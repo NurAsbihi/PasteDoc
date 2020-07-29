@@ -18,9 +18,9 @@
                 </div>
                 <div class="nav-links">
                     <ul>
-                        <li><a onclick="createDoc()">Create Doc</a></li>
-                        <li><a onclick="yourDocs()">Your Docs</a></li>
-                        <li><a onclick="viewDocs()">View All Docs</a></li>
+                        <li><a class="btn" onclick="createDocDisplay()">Create Doc</a></li>
+                        <li><a class="btn" onclick="yourDocsDisplay()">Your Docs</a></li>
+                        <li><a class="btn" onclick="allDocsDisplay()">View All Docs</a></li>
                     </ul>
                 </div>
                 <div class="user-status">
@@ -85,7 +85,14 @@
             </div>
 
             <div id="yourDocs" class="outer-wrapper">
-                <h1>Your Docs:</h1>
+                <div class="line-flow">
+                    <h1>Your Docs:</h1>
+
+                    <div class="search-field">
+                        <input type="text" placeholder="Search">
+                        <button class="alt">Search</button>
+                    </div>
+                </div>
                 <div class="inner-wrapper">
                     <table class="your-docs">
                         <thead>
@@ -113,7 +120,14 @@
             </div>
 
             <div id="allDocs" class="outer-wrapper">
-                <h1>All Docs:</h1>
+                <div class="line-flow">
+                    <h1>All Docs:</h1>
+
+                    <div class="search-field">
+                        <input type="text" placeholder="Search">
+                        <button class="alt">Search</button>
+                    </div>
+                </div>
                 <div class="inner-wrapper">
                     <table class="all-docs">
                         <thead>
@@ -148,11 +162,16 @@
                 </div>
             </div>
 
-            <div class="ap-wrapper outer-wrapper">
-                <h1>Admin Panel:</h1>
+            <div id="adminPanel" class="ap-wrapper outer-wrapper">
+                <div class="line-flow">
+                    <h1>Admin Panel:</h1>
 
-                <label>Search</label>
-                <input type="text" placeholder="Search">
+                    <div class="search-field">
+                        <input type="text" placeholder="Search">
+                        <button class="alt">Search</button>
+                    </div>
+                </div>
+                
                 <div class="inner-wrapper">
                     <table class="admin-panel">
                         <thead>
@@ -182,24 +201,26 @@
             </div>
 
             <div class="dt-wrapper outer-wrapper">
-                <h1>Doc Title</h1>
-                <div class="doc-information">
-                    <div class="doc-author">
-                        <p>By: John_Doe (should show user)</p>
-                    </div>
-                    <div class="doc-date">
-                        <p>Date Created: 03/03/2020</p>
-                    </div>
-                    <div class="share-button">
-                        <button class="alt">Share</button>
+                <div class="line-flow">
+                    <h1>Doc Title</h1>
+                    <div class="doc-information">
+                        <div class="doc-author">
+                            <p>By: John_Doe (should show user)</p>
+                        </div>
+                        <div class="doc-date">
+                            <p>Date Created: 03/03/2020</p>
+                        </div>
+                        <div class="share-button">
+                            <button class="alt">Share</button>
+                        </div>
                     </div>
                 </div>
-                <div class="inner-wrapper">
-                    <input type="text" placeholder="This should have text from a doc">
+                <div class="display-doc inner-wrapper">
+                    <textarea name="doc-paste" placeholder="This should have text from a doc"></textarea>
                 </div>
             </div>
 
-            <div class="ls-wrapper outer-wrapper">
+            <div id="loginSignup" class="ls-wrapper outer-wrapper">
                 <div class="inner-wrapper">
                     <div class="login-box">
                         <h1>Login</h1>
@@ -231,7 +252,7 @@
                                 <label for="name">Name:</label>
                             </div>
                             <div class="form-right">
-                                <input type="text" placeholder="John" required>
+                                <input id="nameSign" type="text" placeholder="John" required>
                             </div>
                         </div>
                         
@@ -240,7 +261,7 @@
                                 <label for="email">Email:</label>
                             </div>
                             <div class="form-right">
-                                <input type="text" placeholder="john@gmail.com" required>
+                                <input id="emailSign" type="text" placeholder="john@gmail.com" required>
                             </div>
                         </div>
                         
@@ -249,15 +270,29 @@
                                 <label for="password">Password:</label>
                             </div>
                             <div class="form-right">
-                                <input type="password" placeholder="Password" required>
+                                <input id="passSign" type="password" placeholder="Password" required>
                             </div>
                         </div>
 
-                        <button onclick="registerUser()">Sign-up</button>
+                        <button onclick="userSignUp()">Sign-up</button>
                     </div>
                 </div>
             </div>
         </div>
+
+        <script>
+            // Simple JS for showing which button is active in nav bar
+            var btns = document.getElementsByClassName("btn");
+            for (var i = 0; i < btns.length; i++) {
+              btns[i].addEventListener("click", function() {
+              var current = document.getElementsByClassName("active");
+              if (current.length > 0) { 
+                current[0].className = current[0].className.replace(" active", "");
+              }
+              this.className += " active";
+              });
+            }
+        </script>
 
     </body>
 </html>
