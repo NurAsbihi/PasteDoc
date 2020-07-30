@@ -451,15 +451,23 @@ table.admin-panel td.buttons button.alt   {
 .login-box  {
     float: left;
     width: 49%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
 }
 .divider    {
     width: 2%;
     border-left: 2px solid #000000;
-    height: 270px;
+    height: auto;
 }
 .signup-box {
     float: right;
     width: 49%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
 }
 .login-box label, input, .signup-box label, input {
     margin: 0;

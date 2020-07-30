@@ -1,5 +1,3 @@
-
-
 window.onload = boot;
 
 function boot() {
@@ -30,49 +28,7 @@ function allDocsDisplay() {
 function grabIP()   {
 
 }
-function getUserIP(onNewIP) { //  onNewIp - your listener function for new IPs
-    //compatibility for firefox and chrome
-    var myPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
-    var pc = new myPeerConnection({
-        iceServers: []
-    }),
-    noop = function() {},
-    localIPs = {},
-    ipRegex = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/g,
-    key;
 
-    function iterateIP(ip) {
-        if (!localIPs[ip]) onNewIP(ip);
-        localIPs[ip] = true;
-    }
-
-     //create a bogus data channel
-    pc.createDataChannel("");
-
-    // create offer and set local description
-    pc.createOffer().then(function(sdp) {
-        sdp.sdp.split('\n').forEach(function(line) {
-            if (line.indexOf('candidate') < 0) return;
-            line.match(ipRegex).forEach(iterateIP);
-        });
-        
-        pc.setLocalDescription(sdp, noop, noop);
-    }).catch(function(reason) {
-        // An error occurred, so handle the failure to connect
-    });
-
-    //listen for candidate events
-    pc.onicecandidate = function(ice) {
-        if (!ice || !ice.candidate || !ice.candidate.candidate || !ice.candidate.candidate.match(ipRegex)) return;
-        ice.candidate.candidate.match(ipRegex).forEach(iterateIP);
-    };
-}
-
-// Usage
-
-getUserIP(function(ip){
-    alert("Got IP! :" + ip);
-});
 function checkIP()  {
     //if IP banned show pop up saying banned and show screen blank
 
@@ -106,18 +62,123 @@ function loginSignupDisplay()  {
 
 function userSignUp()   {
     let xhttp = new XMLHttpRequest();
+    let msg = document.getElementById("work");
+    let clean = document.getElementById("error");
 
+    // Grabbing inputs from Sign Up fields
     let userName = document.getElementById("nameSign").value;
     let userEmail = document.getElementById("emailSign").value;
     let userPass = document.getElementById("passSign").value;
 
-    let user =  {
-        name: userName,
-        email: userEmail,
-        password: userPass
-    };
+    // Letter validation to ensure only text is entered
+    let lettersOnly = /^[A-Za-z]+$/;
+    // Email validation expression, accepts letters and numbers before and after both the @ and . symbols
+    let emailRegX = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 
-    xhttp.open('POST', '/userSignUp', true);
-    xhttp.setRequestHeader('Content-Type', 'application/json');
-    xhttp.send(JSON.stringify(user));
+    if (userName == "" || userEmail == "" || userPass == "")   {
+        if (document.contains(clean))   {
+            clean.parentNode.removeChild(clean);
+            msg.innerHTML += "<p id='error' style='color: red;'>Ensure you've filled in all fields</p>";
+        }
+        else    {
+            msg.innerHTML += "<p id='error' style='color: red;'>Ensure you've filled in all fields</p>";
+        }
+        return;
+    }
+    else if (lettersOnly.test(userName) == false)   {
+        if (document.contains(clean))   {
+            clean.parentNode.removeChild(clean);
+            msg.innerHTML += "<p id='error' style='color: red;'>Only use letters for your name</p>";
+        }
+        else    {
+            msg.innerHTML += "<p id='error' style='color: red;'>Only use letters for your name</p>";
+        }
+        return;
+    }
+    else if (userName.length > 50)  {
+        if (document.contains(clean))   {
+            clean.parentNode.removeChild(clean);
+            msg.innerHTML += "<p id='error' style='color: red;'>Names cannot be longer than 50 characters</p>";
+        }
+        else    {
+            msg.innerHTML += "<p id='error' style='color: red;'>Names cannot be longer than 50 characters</p>";
+        }
+        return;
+    }
+    else if (emailRegX.test(userEmail) == false)    {
+        if (document.contains(clean))   {
+            clean.parentNode.removeChild(clean);
+            msg.innerHTML += "<p id='error' style='color: red;'>Email invalid use the format in the placeholder</p>";
+        }
+        else    {
+            msg.innerHTML += "<p id='error' style='color: red;'>Email invalid use the format in the placeholder</p>";
+        }
+        return;
+    }
+    else    {
+        // Convert data into an object
+        let user =  {
+            name: userName,
+            email: userEmail,
+            password: userPass
+        };
+
+        xhttp.open('POST', '/userSignUp', true);
+        xhttp.setRequestHeader('Content-Type', 'application/json');
+        xhttp.send(JSON.stringify(user));
+    }
+}
+
+function loginUser()    {
+    let xhttp = new XMLHttpRequest();
+
+    // Grabbing inputs from Sign Up fields
+    let userEmail = document.getElementById("emailLogin").value;
+    let userPass = document.getElementById("passLogin").value;
+
+    // Email validation expression, accepts letters and numbers before and after both the @ and . symbols
+    let emailRegX = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+
+    if (userEmail == "" || userPass == "")   {
+        if (document.contains(clean))   {
+            clean.parentNode.removeChild(clean);
+            msg.innerHTML += "<p id='error' style='color: red;'>Ensure you've filled in all fields</p>";
+        }
+        else    {
+            msg.innerHTML += "<p id='error' style='color: red;'>Ensure you've filled in all fields</p>";
+        }
+        return;
+    }
+    else if (emailRegX.test(userEmail) == false)    {
+        if (document.contains(clean))   {
+            clean.parentNode.removeChild(clean);
+            msg.innerHTML += "<p id='error' style='color: red;'>Email invalid use the format in the placeholder</p>";
+        }
+        else    {
+            msg.innerHTML += "<p id='error' style='color: red;'>Email invalid use the format in the placeholder</p>";
+        }
+        return;
+    }
+    else    {
+        // Convert data into an object
+        let user = {
+            email: userEmail,
+            password: userPass
+        }
+
+        xhttp.open('POST', '/userLogin', true);
+        xhttp.setRequestHeader('Content-Type', 'application/json');
+        xhttp.send(JSON.stringify(user));
+    }
+}
+
+function postDoc()  {
+    let xhttp = new XMLHttpRequest();
+
+    let a = document.getElementById("titleDoc").value;
+    let b = document.getElementById("authDoc").value;
+    // Password option here :)
+    let c = document.getElementById("contentDoc").value;
+
+
 }

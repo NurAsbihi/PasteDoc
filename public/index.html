@@ -45,7 +45,7 @@
                                 <label for="doc-title">Doc Title*:</label>
                             </div>
                             <div class="form-right">
-                                <input type="text" placeholder="The Tragedy of Macbeth" required>
+                                <input id="titleDoc" type="text" placeholder="The Tragedy of Macbeth" required>
                             </div>
                         </div>
 
@@ -55,7 +55,7 @@
                                     <label for="author">Author*:</label>
                                 </div>
                                 <div class="form-right">
-                                    <input type="text" placeholder="Shakespeare" required>
+                                    <input id="authDoc" type="text" placeholder="Shakespeare" required>
                                 </div>
                             </div>
                             
@@ -64,22 +64,18 @@
                                     <label for="doc-password">Password <sup>(Optional)</sup>:</label>
                                 </div>
                                 <div class="form-right">
-                                    <input type="password" placeholder="Password123" required>
+                                    <input id="passDoc" type="password" placeholder="Password123" required>
                                 </div>
                             </div>
                         </div>
                         
                         <div class="doc-content">
                             <label for="doc-content">Type/Paste Your Doc Below*:</label>
-                            <!-- <input type="text" placeholder="Fair is foul, and foul is fair." required> -->
-
-                            <textarea name="doc-paste" placeholder="Fair is foul, and fould is fair..."></textarea>
-
+                            <textarea id="contentDoc" name="doc-paste" placeholder="Fair is foul, and fould is fair..."></textarea>
                             <p>Please Note: Your IP Address is recorded as soon as you post this Doc</p>
                         </div>
                         
-
-                        <button>Post Doc</button>
+                        <button onclick="postDoc()">Post Doc</button>
                     </div>
                 </div>
             </div>
@@ -229,7 +225,7 @@
                                 <label for="email">Email:</label>
                             </div>
                             <div class="form-right">
-                                <input type="text" placeholder="john@gmail.com" required>
+                                <input id="emailLogin" type="text" placeholder="john@gmail.com" required>
                             </div>
                         </div>
                         
@@ -238,14 +234,14 @@
                                 <label for="password">Password:</label>
                             </div>
                             <div class="form-right">
-                                <input type="password" placeholder="Password" required>
+                                <input id="passLogin" type="password" placeholder="Password" required>
                             </div>
                         </div>
 
                         <button onclick="loginUser()">Login</button>
                     </div>
                     <div class="divider"></div>
-                    <div class="signup-box">
+                    <div id="work" class="signup-box">
                         <h1>Sign-up</h1>
                         <div class="name-wrapper">
                             <div class="form-left">
