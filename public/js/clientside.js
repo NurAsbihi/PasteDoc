@@ -1,7 +1,8 @@
 window.onload = boot;
 
 function boot() {
-    //loadAllDocs();
+    loadAllDocs();
+    loadAdminDocs();
     createDoc = document.getElementById("createDoc");
     yourDocs = document.getElementById("yourDocs");
     allDocs = document.getElementById("allDocs");
@@ -295,17 +296,116 @@ function loadAllDocs()  {
 
                 let tr = document.createElement('tr');
 
-                for (var i = 0; i < jsonFormat.length; i++) {
+                for (var i =0; i < jsonFormat.length; i++)  {
+                    var row = `<tr>
+                                    <td>${jsonFormat[i].doc_title}</td>
+                                    <td>${jsonFormat[i].author_alias}</td>
+                                    <td>${jsonFormat[i].creation_da}</td>
+                               </tr>`;
+                               table.innerHTML += row;//appendChild(row);
+                }
+
+                /*for (var i = 0; i < jsonFormat["doc_title"].length; i++) {
                     tr = document.createElement('tr');
                     row = jsonFormat[i];
-                    //for (var j = 0, j < jsonFormat)
+                    for (var j = 0; j < jsonFormat["doc_title"].length; j++)    {
+                        var td = document.createElement('td');
+                        td.appendChild(document.createTextNode(row[jsonFormat[j]]));
+                        tr.appendChild(td);
+                    }
+                    table.appendChild(tr)
+                }*/
+
+                /*var tr, row;
+                console.log("jsonResponse", jsonResponse); // changed this
+                for (var r = 0; r < jsonResponse["presidents"].president.length; r++) { // changed this
+                    tr = document.createElement('tr');
+                    row = jsonResponse["presidents"].president[r]; // changed this
+                    for (var i = 0; i < properties.length; i++) {
+                        var td = document.createElement('td');
+                        td.appendChild(document.createTextNode(row[properties[i]]));
+                        tr.appendChild(td);
+                    }
+                    table.appendChild(tr);
                 }
+                document.getElementById('presidentialTable').appendChild(table);*/
             }
         }
     }
     
     xhttp.open('GET', '/loadAllDocs', true);
     xhttp.send();
+}
+function loadAdminDocs()    {
+    let xhttp = new XMLHttpRequest();
+    let table = document.getElementById("ap-tbody");
+
+    xhttp.onreadystatechange = function()   {
+        if (this.readyState == 4 && this.status == 200)    {
+            console.log("Howdy:", this.responseText);
+            
+            if (xhttp.responseText == "error")  {
+                alert("Something went wrong when fetching the data, check console");
+                console.log(this.responseText);
+            }
+            else    {
+                let data = this.responseText;
+                let jsonFormat = JSON.parse(data);
+
+                //console.log(jsonFormat);
+
+                let tr = document.createElement('tr');
+
+                for (var i =0; i < jsonFormat.length; i++)  {
+                    var row = `<tr>
+                                    <td>${jsonFormat[i].doc_title}</td>
+                                    <td>${jsonFormat[i].author_alias}</td>
+                                    <td>${jsonFormat[i].creation_da}</td>
+                                    <td>${jsonFormat[i].ip_address}</td>
+                               </tr>`;
+                               table.innerHTML += row;//appendChild(row);
+                }
+            }
+        }
+    }
+    xhttp.open('GET', '/loadAdminDocs', true);
+    xhttp.send();
+
+}
+function loadYourDocs()    {
+    let xhttp = new XMLHttpRequest();
+    let table = document.getElementById("ap-tbody");
+
+    xhttp.onreadystatechange = function()   {
+        if (this.readyState == 4 && this.status == 200)    {
+            console.log("Howdy:", this.responseText);
+            
+            if (xhttp.responseText == "error")  {
+                alert("Something went wrong when fetching the data, check console");
+                console.log(this.responseText);
+            }
+            else    {
+                let data = this.responseText;
+                let jsonFormat = JSON.parse(data);
+
+                //console.log(jsonFormat);
+
+                let tr = document.createElement('tr');
+
+                for (var i =0; i < jsonFormat.length; i++)  {
+                    var row = `<tr>
+                                    <td>${jsonFormat[i].doc_title}</td>
+                                    <td>${jsonFormat[i].author_alias}</td>
+                                    <td>${jsonFormat[i].creation_da}</td>
+                               </tr>`;
+                               table.innerHTML += row;//appendChild(row);
+                }
+            }
+        }
+    }
+    xhttp.open('GET', '/loadYourDocs', true);
+    xhttp.send();
+
 }
 function viewDoc()  {
 

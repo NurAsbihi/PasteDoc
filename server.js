@@ -58,6 +58,40 @@ app.get('/loadAllDocs', function (req, resp)    {
         }
     });
 });
+app.get('/loadAdminDocs', function (req, resp)  {
+    let sql = "SELECT * FROM docs";
+
+    // Executes the SQL query
+    con.query(sql, (err, result) => {
+        if(err) {
+            console.error("Error:" + JSON.stringify(err));
+            // Sends error message to client.js so error message is displayed
+            resp.send("Error:", err);
+        }
+        else{
+            console.log(JSON.stringify(result));
+            // Sends All Docs in table back to client
+            resp.send(JSON.stringify(result));
+        }
+    });
+});
+app.get('/loadYourDocs', function (req, resp)  {
+    let sql = "SELECT * FROM docs";
+
+    // Executes the SQL query
+    con.query(sql, (err, result) => {
+        if(err) {
+            console.error("Error:" + JSON.stringify(err));
+            // Sends error message to client.js so error message is displayed
+            resp.send("Error:", err);
+        }
+        else{
+            console.log(JSON.stringify(result));
+            // Sends All Docs in table back to client
+            resp.send(JSON.stringify(result));
+        }
+    });
+});
 app.post('/userSignUp', [
     // Express-Validator Check if email is in use in DB
     // Use function inUseCheck
@@ -107,18 +141,17 @@ app.post('/userSignUp', [
         }
 });
 
-app.post('/userLogin', loginUser);
-function loginUser(req, resp)   {
+app.post('/userLogin', function (req, resp)   {
 
     let logUser = req.body;
 
-};
+});
+app.post('/postDoc', function (req, resp) {
 
-app.post('/postDoc',);
-function postDoc(req, resp) {
+});
+app.post('/deleteDoc', function (req, resp)   {
 
-};
-
+});
 function inUseCheck(email)  {
     return new Promise ((resolve, reject) =>  {
         con.query('SELECT COUNT (*) AS total FROM users WHERE email=?', [email], function (err, results, fields)    {
@@ -131,57 +164,6 @@ function inUseCheck(email)  {
         });
     });
 }
-
-/*function registerUser(req, resp) {
-
-    // Grabs the JSON formatted data from the client
-    let rgstrUser = req.body;
-
-    // Grabs users IP to assign to that unique user, on localhost it will be ::1 but if this were on a live server
-    // It would grab the users unique public IP
-    let grabIP = req.connection.remoteAddress || req.socket.remoteAddress || req.headers['x-forwarded-for'];
-
-    console.log("Data = " + JSON.stringify(rgstrUser));
-
-    console.log(rgstrUser.name);
-
-    //if rgstrUser.name =< 
-
-    genID = uniqid();
-
-    cryptPass = bcrypt.hashSync(rgstrUser.password, saltRounds);
-
-    console.log(rgstrUser);
-
-    check.rgstrUser.email
-        .exist()
-        .custom(async rgstrUser.email => {
-            const value = await isMentionNameInUse(mentionName);
-            if (value) {
-                throw new Error('Mention name is already exists!!!');
-                console.log("it worked?")
-            }
-        });
-
-    let sql = "INSERT INTO users VALUES" +
-        "('" + genID + "', '" + rgstrUser.name + "', '" + rgstrUser.email + "', '" + cryptPass + "','user', 'nah', '" + grabIP + "');";
-    
-    con.query(sql, (err, result) => {
-        if(err) {
-            console.error("Error:" + JSON.stringify(err));
-            resp.send("error")
-        }
-        else{
-            console.log(JSON.stringify(result));
-            resp.send("success");
-        }
-    });
-};*/
-
-
-function deleteDoc(req, resp)   {
-
-};
 
 
 
