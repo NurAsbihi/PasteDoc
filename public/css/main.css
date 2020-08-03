@@ -407,7 +407,7 @@ table.admin-panel td.buttons button.alt   {
     flex: 0.8;
 }
 .line-flow .search-field    {
-    display: inline-flex;
+    display: none;
     align-items: center;
     flex: 0 1;
 }
