@@ -514,4 +514,5 @@ table.admin-panel td.buttons button.alt   {
 }
 #alert-box p    {
     color: #ffffff;
+    text-transform: capitalize;
 }

@@ -19,15 +19,15 @@
                 </div>
                 <div class="nav-links">
                     <ul>
-                        <li><a class="btn" onclick="loadAllDocs()">Home</a></li>
+                        <li><a class="btn" onclick="home()">Home</a></li>
                         <li><a class="btn" onclick="createDocDisplay()">Create Doc</a></li>
                         <li><a class="btn" onclick="yourDocsDisplay()">Your Docs</a></li>
                         <li><a class="btn" onclick="allDocsDisplay()">View All Docs</a></li>
                     </ul>
                 </div>
-                <div class="user-status">
-                    <p>Hello, Guest</p>
-                    <button>Logout?</button>
+                <div id="user-greet" class="user-status">
+                    <!--<p>Hello, Guest</p>
+                    <button>Logout?</button>-->
                 </div>
             </div>
         </div>
@@ -105,17 +105,8 @@
                                 <td class="alt">Actions</td>
                             </tr>
                         </thead>
-                        <tbody id="yp-tbody">
-                            <tr>
-                                <td>Macbeth</td>
-                                <td>None</td>
-                                <td>Tuesday</td>
-                                <td class="buttons">
-                                    <button class="alt">View</button>
-                                    <button class="alt">Share</button>
-                                    <button class="alt">Delete</button>
-                                </td>
-                            </tr>
+                        <tbody id="yd-tbody">
+                            <!-- Docs From Database Will Auto-Fill Here-->
                         </tbody>
                     </table>
                 </div>
@@ -142,24 +133,7 @@
                             </tr>
                         </thead>
                         <tbody id="ad-tbody">
-                            <tr>
-                                <td>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Assumenda dignissimos deserunt temporibus beatae non doloribus possimus saepe ipsam voluptatem sint, quasi voluptatibus, voluptas atque voluptatum dolorem iste. Nobis, obcaecati aut!</td>
-                                <td>Shakespeare</td>
-                                <td>Tuesday</td>
-                                <td class="buttons">
-                                    <button class="alt">View</button>
-                                    <button class="alt">Share</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Macbeth</td>
-                                <td>None</td>
-                                <td>Tuesday</td>
-                                <td class="buttons">
-                                    <button class="alt">View</button>
-                                    <button class="alt">Share</button>
-                                </td>
-                            </tr>
+                            <!-- Docs From Database Will Auto-Fill Here-->
                         </tbody>
                     </table>
                 </div>
@@ -188,17 +162,7 @@
                             </tr>
                         </thead>
                         <tbody id="ap-tbody">
-                            <tr>
-                                <td>Macbeth</td>
-                                <td>Shakespeare</td>
-                                <td>Tuesday</td>
-                                <td>192.168.0.1</td>
-                                <td class="buttons">
-                                    <button class="alt">View</button>
-                                    <button class="alt">Delete</button>
-                                    <button class="alt">IP Ban</button>
-                                </td>
-                            </tr>
+                            <!-- Docs From Database Will Auto-Fill Here-->
                         </tbody>
                     </table>
                 </div>
@@ -206,7 +170,7 @@
 
             <!--    Display Doc Section    -->
 
-            <div class="dt-wrapper outer-wrapper">
+            <div id="display-doc" class="dt-wrapper outer-wrapper">
                 <div class="line-flow">
                     <h1>Doc Title</h1>
                     <div class="doc-information">

@@ -1,15 +1,42 @@
 window.onload = boot;
 
 function boot() {
-    loadAllDocs();
-    loadAdminDocs();
     createDoc = document.getElementById("createDoc");
     yourDocs = document.getElementById("yourDocs");
     allDocs = document.getElementById("allDocs");
     adminPanel = document.getElementById("adminPanel");
-    loginSignup = document.getElementById("loginSignup")
-    everythingElse = yourDocs, createDoc;
-    checkIP();
+    loginSignup = document.getElementById("loginSignup");
+    viewDoc = document.getElementById("display-doc");
+    checkSession();
+    loadAllDocs();
+    home();
+}
+function checkSession()   {
+    let xhttp = new XMLHttpRequest();
+    let status = document.getElementById("user-greet");
+
+    if (sessionStorage.sessionUser == undefined)    {
+        status.innerHTML += "<button onclick='loginSignupDisplay()'>Log in/Sign-up</button>";
+    }
+    else    {
+
+        let data =  {
+            id: sessionStorage.sessionUser
+        }
+
+        xhttp.onreadystatechange = function ()  {
+            if (this.readyState == 4 && this.status == 200) {
+
+                status.innerHTML += `<p>Hello, ${JSON.parse(this.responseText)} </p><button onclick="logoutUser()">Logout</button>`;
+
+            }
+        }
+
+        // Send user object to server in JSON format
+        xhttp.open('POST', '/requestName', true);
+        xhttp.setRequestHeader('Content-Type', 'application/json');
+        xhttp.send(JSON.stringify(data));
+    }
 }
 
 function userSignUp()   {
@@ -92,7 +119,7 @@ function userSignUp()   {
                     let p = document.createElement("p");
 
                     // Insert Text into P element then wrap with Div element
-                    p.appendChild(document.createTextNode("Registration Successful, Logging in..."));
+                    p.appendChild(document.createTextNode("Registration successful, lease log in."));
                     status.appendChild(p);
 
                     // Place status Div element above everything within Sign-Up Div
@@ -168,19 +195,7 @@ function loginUser()    {
 
         xhttp.onreadystatechange = function ()  {
             if (this.readyState == 4 && this.status == 200) {
-                if (xhttp.responseText == "success")    {
-                    let status = document.createElement("div");
-                    status.setAttribute("id", "alert-box");
-                    let p = document.createElement("p");
-
-                    // Insert Text into P element then wrap with Div element
-                    p.appendChild(document.createTextNode("Logging in..."));
-                    status.appendChild(p);
-
-                    // Place status Div element above everything within Sign-Up Div
-                    msg.insertBefore(status, msg.childNodes[0]);
-                }
-                else    {
+                if (xhttp.responseText == "error")  {
                     let status = document.createElement("div");
                     status.setAttribute("id", "alert-box");
                     let p = document.createElement("p");
@@ -192,6 +207,21 @@ function loginUser()    {
                     // Place status Div element above everything within Sign-Up Div
                     msg.insertBefore(status, msg.childNodes[0]);
                 }
+                else    {
+                    let status = document.createElement("div");
+                    status.setAttribute("id", "alert-box");
+                    let p = document.createElement("p");
+
+                    // Insert Text into P element then wrap with Div element
+                    p.appendChild(document.createTextNode("Logging in..."));
+                    status.appendChild(p);
+
+                    // Place status Div element above everything within Sign-Up Div
+                    msg.insertBefore(status, msg.childNodes[0]);
+                    sessionStorage.sessionUser = JSON.parse(this.responseText);
+                    
+                    location.reload();
+                }
             }
         }
 
@@ -200,6 +230,11 @@ function loginUser()    {
         xhttp.setRequestHeader('Content-Type', 'application/json');
         xhttp.send(JSON.stringify(user));
     }
+}
+function logoutUser()  {
+    // Removes user from session logging them out
+    sessionStorage.clear();
+    location.reload();
 }
 
 function postDoc()  {
@@ -212,73 +247,91 @@ function postDoc()  {
     // Password option here :)
     let docContent = document.getElementById("contentDoc").value;
 
-    /* setTimeout(
-        errorstuff, 2000
-    );*/
-
-    /* readonly = "readonly" attribute added to doc */
-    let errLine = msg.appendChild(document.createElement('p'));
-    errLine.setAttribute("id", "error");
-    errLine.style.cssText = "color: red;";
-
-    if (docTitle == "" || docAuthor == "" || docContent == "")   {
-        let errText = document.createTextNode("Ensure you've filled in all fields");
-
-        if (document.contains(clean))   {
-            clean.parentNode.removeChild(clean);
-            errLine.appendChild(errText);
-        }
-        else    {
-            errLine.appendChild(errText);
-        }
+    if (sessionStorage.sessionUser == undefined)    {
+        alert("You need to sign in to Post Docs!");
+        return
     }
     else    {
-        // Convert data into an object
-        let doc = {
-            title: docTitle,
-            author: docAuthor,
-            //password: docPass,
-            content: docContent
-        }
+    
+        let errLine = msg.appendChild(document.createElement('p'));
+        errLine.setAttribute("id", "error");
+        errLine.style.cssText = "color: red;";
 
-        xhttp.onreadystatechange = function ()  {
-            if (this.readyState == 4 && this.status == 200) {
-                if (xhttp.responseText == "success")    {
-                    let status = document.createElement("div");
-                    status.setAttribute("id", "alert-box");
-                    let p = document.createElement("p");
-    
-                    // Insert Text into P element then wrap with Div element
-                    p.appendChild(document.createTextNode("Doc uploaded!"));
-                    status.appendChild(p);
-    
-                    // Place status Div element above everything within Sign-Up Div
-                    msg.insertBefore(status, msg.childNodes[0]);
-                }
-                else    {
-                    let status = document.createElement("div");
-                    status.setAttribute("id", "alert-box");
-                    let p = document.createElement("p");
-    
-                    // Insert Text into P element then wrap with Div element
-                    p.appendChild(document.createTextNode("That Email is already in use"));
-                    status.appendChild(p);
-    
-                    // Place status Div element above everything within Sign-Up Div
-                    msg.insertBefore(status, msg.childNodes[0]);
-                }
+        if (docTitle == "" || docAuthor == "" || docContent == "")   {
+            let errText = document.createTextNode("Ensure you've filled in all fields");
+
+            if (document.contains(clean))   {
+                clean.parentNode.removeChild(clean);
+                errLine.appendChild(errText);
+            }
+            else    {
+                errLine.appendChild(errText);
             }
         }
+        else if (docTitle.length > 80) {
+            let errText = document.createTextNode("Doc Titles can be no longer than 80 characters!");
 
-        // Send doc object to server in JSON format
-        xhttp.open('POST', '/postDoc', true);
-        xhttp.setRequestHeader('Content-Type', 'application/json');
-        xhttp.send(JSON.stringify(doc));
+            if (document.contains(clean))   {
+                clean.parentNode.removeChild(clean);
+                errLine.appendChild(errText);
+            }
+            else    {
+                errLine.appendChild(errText);
+            }
+        }
+        else    {
+            // Convert data into an object
+            let doc = {
+                id: sessionStorage.sessionUser,
+                title: docTitle,
+                author: docAuthor,
+                //password: docPass,
+                content: docContent
+            }
+
+            xhttp.onreadystatechange = function ()  {
+                if (this.readyState == 4 && this.status == 200) {
+                    if (xhttp.responseText == "success")    {
+                        let status = document.createElement("div");
+                        status.setAttribute("id", "alert-box");
+                        let p = document.createElement("p");
+        
+                        // Insert Text into P element then wrap with Div element
+                        p.appendChild(document.createTextNode("Doc uploaded!"));
+                        status.appendChild(p);
+        
+                        // Place status Div element above everything within Sign-Up Div
+                        msg.insertBefore(status, msg.childNodes[0]);
+                        loadAllDocs();
+                        loadYourDocs();
+                    }
+                    else    {
+                        let status = document.createElement("div");
+                        status.setAttribute("id", "alert-box");
+                        let p = document.createElement("p");
+        
+                        // Insert Text into P element then wrap with Div element
+                        p.appendChild(document.createTextNode("Something went wrong..."));
+                        status.appendChild(p);
+        
+                        // Place status Div element above everything within Sign-Up Div
+                        msg.insertBefore(status, msg.childNodes[0]);
+                    }
+                }
+            }
+
+            // Send doc object to server in JSON format
+            xhttp.open('POST', '/postDoc', true);
+            xhttp.setRequestHeader('Content-Type', 'application/json');
+            xhttp.send(JSON.stringify(doc));
+        }
     }
 }
 function loadAllDocs()  {
     let xhttp = new XMLHttpRequest();
     let table = document.getElementById("ad-tbody");
+
+    // add if statement to check if table is full, if full clear it then insert data
 
     xhttp.onreadystatechange = function()   {
         if (this.readyState == 4 && this.status == 200)    {
@@ -292,8 +345,6 @@ function loadAllDocs()  {
                 let data = this.responseText;
                 let jsonFormat = JSON.parse(data);
 
-                //console.log(jsonFormat);
-
                 let tr = document.createElement('tr');
 
                 for (var i =0; i < jsonFormat.length; i++)  {
@@ -301,34 +352,13 @@ function loadAllDocs()  {
                                     <td>${jsonFormat[i].doc_title}</td>
                                     <td>${jsonFormat[i].author_alias}</td>
                                     <td>${jsonFormat[i].creation_da}</td>
+                                    <td class="buttons">
+                                        <button class="alt">View</button>
+                                        <button class="alt" onclick="shareDoc()">Share</button>
+                                    </td>
                                </tr>`;
-                               table.innerHTML += row;//appendChild(row);
+                    table.innerHTML += row;
                 }
-
-                /*for (var i = 0; i < jsonFormat["doc_title"].length; i++) {
-                    tr = document.createElement('tr');
-                    row = jsonFormat[i];
-                    for (var j = 0; j < jsonFormat["doc_title"].length; j++)    {
-                        var td = document.createElement('td');
-                        td.appendChild(document.createTextNode(row[jsonFormat[j]]));
-                        tr.appendChild(td);
-                    }
-                    table.appendChild(tr)
-                }*/
-
-                /*var tr, row;
-                console.log("jsonResponse", jsonResponse); // changed this
-                for (var r = 0; r < jsonResponse["presidents"].president.length; r++) { // changed this
-                    tr = document.createElement('tr');
-                    row = jsonResponse["presidents"].president[r]; // changed this
-                    for (var i = 0; i < properties.length; i++) {
-                        var td = document.createElement('td');
-                        td.appendChild(document.createTextNode(row[properties[i]]));
-                        tr.appendChild(td);
-                    }
-                    table.appendChild(tr);
-                }
-                document.getElementById('presidentialTable').appendChild(table);*/
             }
         }
     }
@@ -352,8 +382,6 @@ function loadAdminDocs()    {
                 let data = this.responseText;
                 let jsonFormat = JSON.parse(data);
 
-                //console.log(jsonFormat);
-
                 let tr = document.createElement('tr');
 
                 for (var i =0; i < jsonFormat.length; i++)  {
@@ -362,8 +390,13 @@ function loadAdminDocs()    {
                                     <td>${jsonFormat[i].author_alias}</td>
                                     <td>${jsonFormat[i].creation_da}</td>
                                     <td>${jsonFormat[i].ip_address}</td>
+                                    <td class="buttons">
+                                        <button class="alt" onclick="viewDoc($[i])">View</button>
+                                        <button id="deletedoc" class="alt" onclick="deleteDoc($[i])">Delete</button>
+                                        <button class="alt">Ban User</button>
+                                    </td>
                                </tr>`;
-                               table.innerHTML += row;//appendChild(row);
+                    table.innerHTML += row;
                 }
             }
         }
@@ -374,95 +407,154 @@ function loadAdminDocs()    {
 }
 function loadYourDocs()    {
     let xhttp = new XMLHttpRequest();
-    let table = document.getElementById("ap-tbody");
+    let table = document.getElementById("yd-tbody");
 
-    xhttp.onreadystatechange = function()   {
-        if (this.readyState == 4 && this.status == 200)    {
-            console.log("Howdy:", this.responseText);
-            
-            if (xhttp.responseText == "error")  {
-                alert("Something went wrong when fetching the data, check console");
-                console.log(this.responseText);
-            }
-            else    {
-                let data = this.responseText;
-                let jsonFormat = JSON.parse(data);
+    if (sessionStorage.sessionUser == undefined)    {
+        return
+    }
+    else    {
 
-                //console.log(jsonFormat);
+        let data =  {
+            id: sessionStorage.sessionUser
+        }
 
-                let tr = document.createElement('tr');
+        xhttp.onreadystatechange = function()   {
+            if (this.readyState == 4 && this.status == 200)    {
+                console.log("Howdy:", this.responseText);
+                
+                if (xhttp.responseText == "error")  {
+                    alert("Something went wrong when fetching the data, check console");
+                    console.log(this.responseText);
+                }
+                else    {
+                    let data = this.responseText;
+                    let jsonFormat = JSON.parse(data);
 
-                for (var i =0; i < jsonFormat.length; i++)  {
-                    var row = `<tr>
-                                    <td>${jsonFormat[i].doc_title}</td>
-                                    <td>${jsonFormat[i].author_alias}</td>
-                                    <td>${jsonFormat[i].creation_da}</td>
-                               </tr>`;
-                               table.innerHTML += row;//appendChild(row);
+                    //console.log(jsonFormat);
+
+                    let tr = document.createElement('tr');
+
+                    for (var i =0; i < jsonFormat.length; i++)  {
+                        var row = `<tr>
+                                        <td>${jsonFormat[i].doc_title}</td>
+                                        <td>${jsonFormat[i].author_alias}</td>
+                                        <td>${jsonFormat[i].creation_da}</td>
+                                        <td class="buttons">
+                                            <button class="alt" onclick="viewDoc($[i])">View</button>
+                                            <button class="alt" onclick="shareDoc()">Share</button>
+                                            <button id="deletedoc" class="alt" onclick="deleteDoc($[i])">Delete</button>
+                                        </td>
+                                </tr>`;
+                        table.innerHTML += row;
+                    }
                 }
             }
         }
+        // Send user object to server in JSON format
+        xhttp.open('POST', '/loadYourDocs', true);
+        xhttp.setRequestHeader('Content-Type', 'application/json');
+        xhttp.send(JSON.stringify(data));
     }
-    xhttp.open('GET', '/loadYourDocs', true);
-    xhttp.send();
-
 }
 function viewDoc()  {
-
+    /* readonly = "readonly" attribute added to doc */
 }
 function deleteDoc()    {
+    let xhttp = new XMLHttpRequest();
 
+    let docID = document.getElementsById("deletedoc")[index].id;
+
+    console.log(docID);
 }
 function shareDoc() {
-    
+    alert("Not implemented");
 }
+
+function home() {
+    let xhttp = new XMLHttpRequest();
+
+    // if sessionStorage unidentified show All Docs and login/signup
+
+    if (sessionStorage.sessionUser  == undefined)   {
+        allDocs.style.display = "block";
+        loginSignup.style.display = "none";
+        viewDoc.style.display = "none";
+        createDoc.style.display = "none"
+        yourDocs.style.display = "none";
+        adminPanel.style.display = "none";
+    }
+    else    {
+        // Convert data into an object
+        let data = {
+            id: sessionStorage.sessionUser
+        }
+
+        // if user perm = user show create doc, your docs, and all docs (hide login and admin panel)
+        // if user perm = admin show admin panel only
+
+        xhttp.onreadystatechange = function ()  {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText);
+                let jsonFormat = JSON.parse(this.responseText);
+                if  (jsonFormat == "user")   {
+                    loadYourDocs();
+                    createDoc.style.display = "block";
+                    allDocs.style.display = "block";
+                    yourDocs.style.display = "block";
+                    adminPanel.style.display = "none";
+                    viewDoc.style.display = "none";
+                    loginSignup.style.display = "none";
+                }
+                else if (jsonFormat == "admin")  {
+                    loadAdminDocs();
+                    loadYourDocs();
+                    adminPanel.style.display = "block";
+                    createDoc.style.display = "none"
+                    allDocs.style.display = "none";
+                    yourDocs.style.display = "none";
+                    loginSignup.style.display = "none";
+                    viewDoc.style.display = "none";
+                }
+            }
+        }
+        // Send user object to server in JSON format
+        xhttp.open('POST', '/getPerm', true);
+        xhttp.setRequestHeader('Content-Type', 'application/json');
+        xhttp.send(JSON.stringify(data));
+    }
+}
+
+
 
 function createDocDisplay()    {
     createDoc.style.display = "block";
-    yourDocs.style.display = "none";
     allDocs.style.display = "none";
+    loginSignup.style.display = "none";
+    yourDocs.style.display = "none";
+    adminPanel.style.display = "none";
+    viewDoc.style.display = "none";
 };
 function yourDocsDisplay() {
     yourDocs.style.display = "block";
     createDoc.style.display = "none";
     allDocs.style.display = "none";
+    adminPanel.style.display = "none";
+    viewDoc.style.display = "none";
+    loginSignup.style.display = "none";
 }
 function allDocsDisplay() {
     allDocs.style.display = "block";
     createDoc.style.display = "none";
     yourDocs.style.display = "none";
+    loginSignup.style.display = "none";
+    adminPanel.style.display = "none";
+    viewDoc.style.display = "none";
 }
-function grabIP()   {
-
-}
-
-function checkIP()  {
-    //if IP banned show pop up saying banned and show screen blank
-
-    //else checkStatus()
-    everythingElse.style.display = "block";
-}
-function checkStatus()  {
-    //if user signed in - show all create docs - your docs - all docs 
-    //change nav bar to say sign out
-    
-    //if admin signed in - only show admin panel
-    //change nav bar to say sign out
-
-    //else show loggedOut()
-    loggedOut();
-}
-
-function loggedOut() {
-    allDocs.style.display = "block";
-    createDoc.style.display = "none";
-    yourDocs.style.display = "none";
-}
-
 function loginSignupDisplay()  {
     loginSignup.style.display = "block";
     createDoc.style.display = "none"
     allDocs.style.display = "none";
     yourDocs.style.display = "none";
     adminPanel.style.display = "none";
+    viewDoc.style.display = "none";
 }
