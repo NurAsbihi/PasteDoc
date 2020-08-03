@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>PasteDoc</title>
+
+        <link rel="stylesheet" href="css/main.css" type="text/css">
+        <script src="js/clientside.js"></script>
+    </head>
+
+    <body>
+
+        <!-- Navigation Menu With Links -->
+
+        <div class="navigation">
+            <div class="bar">
+                <div class="logo">
+                    <h1>PasteDoc</h1>
+                </div>
+                <div class="nav-links">
+                    <ul>
+                        <li><a class="btn" onclick="home()">Home</a></li>
+                        <li><a class="btn" onclick="createDocDisplay()">Create Doc</a></li>
+                        <li><a class="btn" onclick="yourDocsDisplay()">Your Docs</a></li>
+                        <li><a class="btn" onclick="allDocsDisplay()">View All Docs</a></li>
+                    </ul>
+                </div>
+                <div id="user-greet" class="user-status">
+                    <!--<p>Hello, Guest</p>
+                    <button>Logout?</button>-->
+                </div>
+            </div>
+        </div>
+
+        <!-- Container For Maintaining Global Width -->
+
+        <div class="container">
+
+            <!-- Content Displayed On The Page -->
+
+            <!--    Create Doc Section  -->
+
+            <div id="createDoc" class="cd-wrapper outer-wrapper">
+                <h1>Create Doc:</h1>
+                <div class="inner-wrapper">
+                    <div id="doc-create" class="create-doc">
+                        <div class="doc-title">
+                            <div class="form-left">
+                                <label for="titleDoc">Doc Title*:</label>
+                            </div>
+                            <div class="form-right">
+                                <input id="titleDoc" type="text" placeholder="The Tragedy of Macbeth" required>
+                            </div>
+                        </div>
+
+                        <div class="section-fields">
+                            <div class="field-left">
+                                <div class="form-left">
+                                    <label for="authDoc">Author*:</label>
+                                </div>
+                                <div class="form-right">
+                                    <input id="authDoc" type="text" placeholder="Shakespeare" required>
+                                </div>
+                            </div>
+                            
+                            <div class="field-right">
+                                <div class="form-left">
+                                    <label for="passDoc">Password <sup>(Optional)</sup>:</label>
+                                </div>
+                                <div class="form-right">
+                                    <input id="passDoc" type="password" placeholder="Password123">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="doc-content">
+                            <label for="contentDoc">Type/Paste Your Doc Below*:</label>
+                            <textarea id="contentDoc" name="doc-paste" placeholder="Fair is foul, and fould is fair..."></textarea>
+                            <p>Please Note: Your IP Address is recorded as soon as you post this Doc</p>
+                        </div>
+                        
+                        <button onclick="postDoc()">Post Doc</button>
+                    </div>
+                </div>
+            </div>
+
+            <!--    Your Docs Section   -->
+
+            <div id="yourDocs" class="outer-wrapper">
+                <div class="line-flow">
+                    <h1>Your Docs:</h1>
+
+                    <div class="search-field">
+                        <input type="text" placeholder="Search">
+                        <button class="alt">Search</button>
+                    </div>
+                </div>
+                <div class="inner-wrapper">
+                    <table class="your-docs">
+                        <thead>
+                            <tr>
+                                <td>Title</td>
+                                <td>Password</td>
+                                <td>Date Created</td>
+                                <td class="alt">Actions</td>
+                            </tr>
+                        </thead>
+                        <tbody id="yd-tbody">
+                            <!-- Docs From Database Will Auto-Fill Here-->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!--    All Docs Section    -->
+
+            <div id="allDocs" class="outer-wrapper">
+                <div class="line-flow">
+                    <h1>All Docs:</h1>
+                    <div class="search-field">
+                        <input type="text" placeholder="Search">
+                        <button class="alt">Search</button>
+                    </div>
+                </div>
+                <div class="inner-wrapper">
+                    <table class="all-docs">
+                        <thead>
+                            <tr>
+                                <td>Title</td>
+                                <td>Author</td>
+                                <td>Date Created</td>
+                                <td class="alt">Actions</td>
+                            </tr>
+                        </thead>
+                        <tbody id="ad-tbody">
+                            <!-- Docs From Database Will Auto-Fill Here-->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!--    Admin Panel Section     -->
+
+            <div id="adminPanel" class="ap-wrapper outer-wrapper">
+                <div class="line-flow">
+                    <h1>Admin Panel:</h1>
+
+                    <div class="search-field">
+                        <input type="text" placeholder="Search">
+                        <button class="alt">Search</button>
+                    </div>
+                </div>   
+                <div class="inner-wrapper">
+                    <table class="admin-panel">
+                        <thead>
+                            <tr>
+                                <td>Title</td>
+                                <td>Author</td>
+                                <td>Date Created</td>
+                                <td>IP</td>
+                                <td class="alt">Actions</td>
+                            </tr>
+                        </thead>
+                        <tbody id="ap-tbody">
+                            <!-- Docs From Database Will Auto-Fill Here-->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!--    Display Doc Section    -->
+
+            <div id="display-doc" class="dt-wrapper outer-wrapper">
+                <!--    Doc Content Displayed From Database, Section Auto-Fills-->
+            </div>
+
+            <!--    Login & Sign Up Section     -->
+
+            <div id="loginSignup" class="ls-wrapper outer-wrapper">
+                <div class="inner-wrapper">
+                    <div id="login" class="login-box">
+                        <h1>Login</h1>
+                        <div class="email-wrapper">
+                            <div class="form-left">
+                                <label for="emailLogin">Email:</label>
+                            </div>
+                            <div class="form-right">
+                                <input id="emailLogin" type="text" placeholder="john@gmail.com" required>
+                            </div>
+                        </div>
+                        
+                        <div class="password-wrapper">
+                            <div class="form-left">
+                                <label for="passLogin">Password:</label>
+                            </div>
+                            <div class="form-right">
+                                <input id="passLogin" type="password" placeholder="Password" required>
+                            </div>
+                        </div>
+
+                        <button onclick="loginUser()">Login</button>
+                    </div>
+                    <div class="divider"></div>
+                    
+                    <div id="sign-up" class="signup-box">
+                        
+                        <h1>Sign-up</h1>
+                        <div class="name-wrapper">
+                            <div class="form-left">
+                                <label for="nameSign">Name:</label>
+                            </div>
+                            <div class="form-right">
+                                <input id="nameSign" type="text" placeholder="John" required>
+                            </div>
+                        </div>
+                        
+                        <div class="email-wrapper">
+                            <div class="form-left">
+                                <label for="emailSign">Email:</label>
+                            </div>
+                            <div class="form-right">
+                                <input id="emailSign" type="text" placeholder="john@gmail.com" required>
+                            </div>
+                        </div>
+                        
+                        <div class="password-wrapper">
+                            <div class="form-left">
+                                <label for="passSign">Password:</label>
+                            </div>
+                            <div class="form-right">
+                                <input id="passSign" type="password" placeholder="Password" required>
+                            </div>
+                        </div>
+
+                        <button onclick="userSignUp()">Sign-up</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // Simple JS for showing which button is active in nav bar
+            var btns = document.getElementsByClassName("btn");
+            for (var i = 0; i < btns.length; i++) {
+              btns[i].addEventListener("click", function() {
+              var current = document.getElementsByClassName("active");
+              if (current.length > 0) { 
+                current[0].className = current[0].className.replace(" active", "");
+              }
+              this.className += " active";
+              });
+            }
+        </script>
+
+    </body>
+</html>

@@ -1,0 +1,518 @@
+/* Do you even read all of this? */
+
+/*--    Importing The Font For The Site --*/
+
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+/*--    Setting The Global Defaults For Page Layout --*/
+
+*   {
+    font-family: Roboto, sans-serif, Arial;
+    margin: 0 auto;
+    padding: 0px;
+}
+button  {
+    background-color: #F23C93;
+    color: #ffffff;
+    padding: 10px 30px;
+    border-radius: 40px;
+    border: 2px solid #000000;
+    cursor: pointer;
+    font-size: 12px;
+}
+button.alt  {
+    background-color: rgb(175, 175, 175);
+    color: #000000;
+    padding: 8px 20px;
+    border: none;
+    font-size: 16px;
+}
+input   {
+    width: 100%;
+    border-radius: 5px;
+    min-height: 35px;
+    border: 2px solid black;
+    padding-left: 5px;
+    font-size: 14px;
+}
+
+/*--------------------------------
+
+        Navigation Menu CSS Rules
+
+----------------------------------*/
+
+/*-- Navigation Menu Is 'Fixed' so It Will Stick To The Top Of The Page As You Scroll   --*/
+
+.navigation {
+    position: fixed;
+    top: 0; /* Ensures Nav Bar Stays At The Top Of The Page */
+    right: 0;
+    width: 100%;
+    display: flex;
+    background-color: #ffffff;
+    border-bottom: 3px solid #000000;
+    z-index: 999;
+}
+.navigation .bar    {
+    width: 100%;
+    height: 70px;
+    display: flex;
+    max-width: 1200px; /* Keeps All Content Within Width Of 1200px */
+    flex-direction: row;
+    align-items: center;
+}
+.logo   {
+    width: 15%;
+    position: relative;
+    font-size: 14px;
+    color: #000000;
+}
+.nav-links  {
+    width: 50%;
+}
+.nav-links ul {
+    list-style: none;
+}
+.nav-links ul li  {
+    display: block;
+    float: left;
+}
+.nav-links li a   {
+    text-decoration: none;
+    cursor: pointer;
+    color: #000000;
+    font-size: 16px;
+    padding: 5px;
+    border: 1px solid black;
+    border-top: none;
+    text-transform: none;
+    padding: 25px;
+}
+.nav-links li:nth-child(2) a    {
+    border-left: none;
+    border-right: none;
+}
+.nav-links li a:hover, a.active  {
+    background: rgb(219, 219, 219);
+}
+
+.user-status    {
+    width: 35%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.user-status p  {
+    margin: 1px;
+    padding-right: 5px;
+}
+.user-status button {
+    margin: 1px;
+}
+
+/*--    Container Keeps All Content On The Site Within 1200px   --*/
+
+.container  {
+    margin-top: 55px;
+    display: block;
+    position: relative;
+    max-width: 1200px;
+}
+
+/*--    For The Headings Of Sections    --*/
+
+.outer-wrapper  {
+    padding-top: 25px;
+}
+.outer-wrapper h1   {
+    font-weight: 600;
+}
+
+/*--    Grey Border Background For Content To Appear In     --*/
+
+.inner-wrapper  {
+    display: flex;
+    background: rgb(219, 219, 219);
+    border-radius: 8px;
+    padding: 12px;
+    min-height: 20px;
+    margin-top: 7px;
+}
+.inner-wrapper button   {
+    display: flex;
+}
+
+/*--    Left & Right Rules For Input and Labels     --*/
+
+.form-left  {
+    display: inline-flex;
+    align-items: center;
+    float: left;
+    margin: 0;
+}
+.form-right {
+    display: inline-flex;
+    align-items: center;
+    float: right;
+    margin: 0;
+}
+
+
+/*--------------------------------------------
+
+        CSS Rules For The 'Create Doc' Section    
+        
+-----------------------------------------------*/
+
+.create-doc {
+    width: 100%;
+}
+
+/*--    Create A Doc Section - Doc Title    --*/
+
+.doc-title  {
+    display: flex;
+}
+.doc-title .form-left    {
+    display: inline-flex;
+    align-items: center;
+    float: left;
+    width: 8%;
+}
+.doc-title .form-right   {
+    width: 92%;
+}
+.doc-title .form-left label {
+    margin: 0 auto;
+    width: 100%;
+}
+
+/*--    Create A Doc Section - Author & Password    --*/
+
+.section-fields {
+    display: flex;
+    margin-top: 5px;
+}
+.section-fields label    {
+    margin: 0 auto;
+    width: 100%;
+}
+.section-fields .form-right {
+    width: 80%;
+}
+.field-left   {
+    display: inline-flex;
+    float: left;
+    width: 100%;
+}
+.field-left .form-left  {
+    width: 16%;
+}
+.field-right  {
+    display: inline-flex;
+    float: right;
+    width: 100%;
+}
+.field-right .form-left {
+    width: 25%;
+}
+
+/*--    Create A Doc Section - Doc Content  --*/
+
+.doc-content    {
+    width: 100%;
+    margin-top: 5px;
+}
+.doc-content textarea    {
+    margin-top: 5px;
+    width: 100%;
+    min-height: 180px;
+    border-radius: 5px;
+    border: 2px solid #000000;
+    font-size: 14px;
+    padding: 5px;
+    resize: vertical;
+
+    /* Without this it'll flow out of the div */
+
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.doc-content p  {
+    margin-top: 5px;
+    font-size: 10px;
+}
+
+/*----------------------------------
+
+        Your Docs Section CSS Rules
+
+----------------------------------*/
+
+table.your-docs {
+    width: 100%;
+}
+table.your-docs td:nth-child(-n+3)  {
+    width: 25%;
+    max-width: 0;
+}
+table.your-docs td:nth-child(4)  {
+    width: 25%;
+}
+table.your-docs thead   {
+    font-size: 22px;
+    font-weight: 600;
+}
+table.your-docs tbody td    {
+    padding-top: 2.5px;
+    padding-bottom: 2.5px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+table.your-docs td.alt   {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+table.your-docs td.buttons  {
+    display: inline-flex;
+    justify-content: center;
+    width: 100%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+table.your-docs td.buttons button.alt   {
+    margin: 0;
+}
+
+/*---------------------------------
+
+        All Docs Section CSS Rules
+
+---------------------------------*/
+
+table.all-docs {
+    width: 100%;
+}
+table.all-docs td:nth-child(-n+3)  {
+    width: 25%;
+    max-width: 0;
+}
+table.all-docs td:nth-child(4)  {
+    width: 25%;
+}
+table.all-docs thead   {
+    font-size: 22px;
+    font-weight: 600;
+}
+table.all-docs tbody td    {
+    padding-top: 2.5px;
+    padding-bottom: 2.5px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+table.all-docs td.alt   {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+table.all-docs td.buttons  {
+    display: inline-flex;
+    justify-content: center;
+    width: 100%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+table.all-docs td.buttons button.alt   {
+    margin: 0;
+}
+
+/*------------------------------------
+
+        Admin Panel Section CSS Rules
+
+------------------------------------*/
+
+table.admin-panel {
+    width: 100%;
+}
+table.admin-panel td:nth-child(-n+4)  {
+    width: 19%;
+    max-width: 0;
+}
+table.admin-pane td:nth-child(5)  {
+    width: 24%;
+}
+table.admin-panel thead   {
+    font-size: 22px;
+    font-weight: 600;
+}
+table.admin-panel tbody td    {
+    padding-top: 2.5px;
+    padding-bottom: 2.5px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+table.admin-panel td.alt   {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+table.admin-panel td.buttons  {
+    display: inline-flex;
+    justify-content: center;
+    width: 100%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+table.admin-panel td.buttons button.alt   {
+    margin: 0;
+}
+
+/*----------------------------------------------
+
+        Line Flow CSS Rules 
+        (Align Headers w/ Elements
+        e.g. All Docs in line with Search Bar)
+
+----------------------------------------------*/
+
+.line-flow  {
+    display: flex;
+}
+.line-flow h1   {
+    margin: 0;
+    flex: 1;
+}
+.line-flow .doc-information  {
+    display: inline-flex;
+    align-items: center;
+    flex: 0.8;
+}
+.line-flow .search-field    {
+    display: none;
+    align-items: center;
+    flex: 0 1;
+}
+.line-flow .search-field input  {
+    border-radius: 25px;
+    padding-left: 10px;
+    border: 1.5px solid #000000;
+    margin-right: 5px;
+    width: auto;
+}
+/*------------------------------------------
+
+        Display/View Doc Section CSS Rules
+
+------------------------------------------*/
+
+.display-doc textarea   {
+    margin-top: 5px;
+    width: 100%;
+    min-height: 120px;
+    border-radius: 5px;
+    border: 2px solid #000000;
+    font-size: 14px;
+    padding: 5px;
+    resize: vertical;
+
+    /* Without this it'll flow out of the div */
+
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+
+/*-----------------------------------------
+
+        Login & Sign-up Section CSS Rules
+
+-----------------------------------------*/
+
+.login-box  {
+    float: left;
+    width: 49%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+}
+.divider    {
+    width: 2%;
+    border-left: 2px solid #000000;
+    height: auto;
+}
+.signup-box {
+    float: right;
+    width: 49%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+}
+.login-box label, input, .signup-box label, input {
+    margin: 0;
+}
+.login-box button   {
+    margin-top: 79px;
+    padding: 10px 60px;
+}
+ .signup-box button {
+    margin-top: 30px;
+    padding: 10px 60px;
+}
+.email-wrapper, .password-wrapper, .name-wrapper  {
+    display: flex;
+    margin-top: 10px;
+}
+.email-wrapper .form-left   {
+    width: 14%;
+}
+.email-wrapper .form-right  {
+    width: 85%;
+}
+.password-wrapper .form-left    {
+    width: 14%;
+}
+.password-wrapper .form-right   {
+    width: 85%;
+}
+.name-wrapper .form-left    {
+    width: 14%;
+}
+.name-wrapper .form-right   {
+    width: 85%;
+}
+
+
+/* Alert Box That Shows On Sign-up and Login */
+
+#alert-box  {
+    padding: 12px;
+    border-radius: 10px;
+    background: #F23C93;
+    margin-bottom: 10px;
+}
+#alert-box p    {
+    color: #ffffff;
+    text-transform: capitalize;
+}

@@ -17,8 +17,8 @@ app.use(bodyParser.json());
 const con = mysql.createPool    ({
     connectionLimit: 1,
     host: "localhost",
-    user: "dev",
-    password: "password",
+    user: "root",
+    password: "",
     database:"pastedoc",
     debug: false
 });
